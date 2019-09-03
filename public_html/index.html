@@ -1,0 +1,31 @@
+<html>
+<body>
+<h1>Temperature: <span id="temperature"></span></h1>
+<h1>pH: <span id="pH"></span></h1>
+<h1>dO: <span id="dO"></span></h1>
+
+</body>
+</html>
+
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    getTemperature(this);
+    }
+  };
+  xhttp.open("GET", "http://algae-pi2.rowanads.rowan.edu:8080/algae_api/measurements", true);
+  xhttp.send();
+}
+function getTemperature(xml) {
+  console.log(xml.response)
+  const {temperature, pH, dO} = JSON.parse(xml.response);
+  document.getElementById("temperature").innerHTML = temperature
+  document.getElementById("pH").innerHTML = pH
+   document.getElementById("dO").innerHTML = dO
+
+}
+loadDoc();
+</script>
